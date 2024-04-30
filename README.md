@@ -11,3 +11,7 @@ npm install
 ```bash
 npm run dev
 ```
+
+## Attribution
+
+Chess icons from Vecteezy.com.
