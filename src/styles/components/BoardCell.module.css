@@ -1,0 +1,20 @@
+.BoardCell {
+	border: 1px solid black;
+	width: 4rem;
+	height: 4rem;
+}
+
+.BoardCell {
+	background-color: white;
+}
+
+.BoardCell:nth-child(2n + 1):nth-child(-n + 8),
+.BoardCell:nth-child(2n):nth-child(n + 9):nth-child(-n + 16),
+.BoardCell:nth-child(2n + 1):nth-child(n + 17):nth-child(-n + 24),
+.BoardCell:nth-child(2n):nth-child(n + 25):nth-child(-n + 32),
+.BoardCell:nth-child(2n + 1):nth-child(n + 33):nth-child(-n + 40),
+.BoardCell:nth-child(2n):nth-child(n + 41):nth-child(-n + 48),
+.BoardCell:nth-child(2n + 1):nth-child(n + 49):nth-child(-n + 56),
+.BoardCell:nth-child(2n):nth-child(n + 57):nth-child(-n + 64) {
+	background-color: black;
+}

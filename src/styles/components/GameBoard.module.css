@@ -1,0 +1,10 @@
+.GameBoard {
+	display: grid;
+	grid-template-columns: repeat(8, 1fr);
+	border: 1rem solid burlywood;
+}
+
+.ChessPiece {
+	width: 4rem;
+	height: 4rem;
+}
