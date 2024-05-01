@@ -18,3 +18,7 @@
 .BoardCell:nth-child(2n):nth-child(n + 57):nth-child(-n + 64) {
 	background-color: black;
 }
+
+.BoardCell.selected {
+	background-color: cornflowerblue !important;
+}

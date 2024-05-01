@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from 'react';
+
 import Image, { StaticImageData } from 'next/image';
 
 import BoardCell from '../components/BoardCell';
@@ -48,11 +52,32 @@ export type GameBoardProps = {
 	board: GamePiece[][];
 }
 
+type Position = {
+	row: number;
+	col: number;
+};
+
 export default function GameBoard({ board } : GameBoardProps) {
+	const [selectedCell, setSelectedCell] = useState<Position>({ row: -1, col: -1 });
+
+	const handleClick = (row: number, col: number) => {
+		setSelectedCell(
+			current => (current.row == row && current.col == col)
+				? { row: -1, col: -1 }
+				: { row, col }
+		);
+	}
+
+	const playerColour : Owner = 'white';
+
 	return (
 		<div className={styles.GameBoard}>
-			{board.map((row, i) => row.map((cell) =>
-				<BoardCell key={i}>
+			{board.map((row, i) => row.map((cell, j) =>
+				<BoardCell
+					key={`row${i}col${j}`}
+					onClick={() => cell.owner == playerColour && handleClick(i, j)}
+					isSelected={selectedCell.row == i && selectedCell.col == j}
+				>
 					{(cell.owner && cell.piece)
 						&& <Image
 								src={imageMap[cell.owner][cell.piece]}
