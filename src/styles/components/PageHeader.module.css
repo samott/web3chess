@@ -2,4 +2,11 @@
 	color: white;
 	background-color: black;
 	padding: 1em;
+	display: flex;
+	justify-content: space-between;
+}
+
+.WalletButton {
+	display: flex;
+	align-items: center;
 }
