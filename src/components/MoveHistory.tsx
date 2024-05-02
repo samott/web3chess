@@ -16,7 +16,7 @@ export default function MoveHistory({
 } : MoveHistoryProps) {
 	return (
 		<div className={styles.MoveHistory}>
-			{ items.map(item => <div className={styles.MoveHistoryItem}>
+			{ items.map((item, i) => <div className={styles.MoveHistoryItem} key={i}>
 				<div>
 					{item.from.owner} {item.from.piece}:
 						({item.from.row}, {item.from.col})
