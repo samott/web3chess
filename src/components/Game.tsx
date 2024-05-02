@@ -4,7 +4,13 @@ import { useState } from 'react';
 
 import GameBoard from '../components/GameBoard';
 
-const initialBoard = [
+import {
+	Owner,
+	Position,
+	GamePiece,
+} from '../types';
+
+const initialBoard : GamePiece[][] = [
 	[
 		{ owner: 'black', piece: 'rook' },
 		{ owner: 'black', piece: 'knight' },
@@ -94,7 +100,7 @@ type LineType =
 	| 'Column'
 	| 'Diagonal';
 
-const playerColour = 'white';
+const playerColour: Owner = 'white';
 
 export default function Game() {
 	const [board, setBoard] = useState<GamePiece[][]>(initialBoard);
@@ -212,7 +218,7 @@ export default function Game() {
 		if (fromCell.piece == 'queen') {
 			const lineType = isClearLine(board, from, to);
 
-			if (lineType != 'NotClear' && lineType != 'NotClear')
+			if (lineType != 'NotClear' && lineType != 'NotALine')
 				return true;
 		}
 
@@ -226,7 +232,6 @@ export default function Game() {
 
 	const handleAttemptMove = (from: Position, to: Position) => {
 		const fromCell = board[from.row][from.col];
-		const toCell = board[to.row][to.col];
 
 		if (!isValidMove(from, to))
 			return;
