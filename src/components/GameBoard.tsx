@@ -6,6 +6,13 @@ import Image, { StaticImageData } from 'next/image';
 
 import BoardCell from '../components/BoardCell';
 
+import {
+	Position,
+	Owner,
+	Piece,
+	GamePiece
+} from '../types';
+
 import styles from '../styles/components/GameBoard.module.css';
 
 import whitePawn from '../../public/images/white-pawn.svg';
@@ -40,42 +47,41 @@ const imageMap : Record<Owner, Record<Piece, StaticImageData>> = {
 	},
 } as const;
 
-export type Owner = 'white' | 'black';
-export type Piece = 'pawn' | 'rook' | 'bishop' | 'knight' | 'king' | 'queen';
-
-export type GamePiece = {
-	owner: Owner|null;
-	piece: Piece|null;
-}
-
 export type GameBoardProps = {
 	board: GamePiece[][];
+	playerColour: Owner;
+	onAttemptMove: (from: Position, to: Position) => void;
 }
-
-type Position = {
-	row: number;
-	col: number;
-};
-
-export default function GameBoard({ board } : GameBoardProps) {
+export default function GameBoard({
+	board,
+	playerColour,
+	onAttemptMove,
+} : GameBoardProps) {
 	const [selectedCell, setSelectedCell] = useState<Position>({ row: -1, col: -1 });
 
-	const handleClick = (row: number, col: number) => {
-		setSelectedCell(
-			current => (current.row == row && current.col == col)
-				? { row: -1, col: -1 }
-				: { row, col }
-		);
-	}
+	const handleClick = (row: number, col: number, piece: GamePiece) => {
+		if (piece.owner == playerColour) {
+			setSelectedCell(
+				current => (current.row == row && current.col == col)
+					? { row: -1, col: -1 }
+					: { row, col }
+			);
 
-	const playerColour : Owner = 'white';
+			return;
+		}
+
+		if (selectedCell.row == -1)
+			return;
+
+		onAttemptMove(selectedCell, { row, col });
+	}
 
 	return (
 		<div className={styles.GameBoard}>
 			{board.map((row, i) => row.map((cell, j) =>
 				<BoardCell
 					key={`row${i}col${j}`}
-					onClick={() => cell.owner == playerColour && handleClick(i, j)}
+					onClick={() => handleClick(i, j, cell)}
 					isSelected={selectedCell.row == i && selectedCell.col == j}
 				>
 					{(cell.owner && cell.piece)
