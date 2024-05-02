@@ -1,0 +1,22 @@
+.MoveHistory {
+	display: flex;
+	flex-direction: column;
+	width: 80%;
+	margin: 1rem;
+	gap: 0.2em;
+}
+
+.MoveHistoryItem {
+	border: 1px solid black;
+	padding: 0.2rem;
+	display: flex;
+	justify-content: space-between;
+}
+
+.MoveHistoryItem:nth-child(odd) {
+	background-color: burlywood;
+}
+
+.MoveHistoryItem:nth-child(even) {
+	background-color: #9C9C9C;
+}

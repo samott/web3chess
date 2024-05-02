@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 import GameBoard from '../components/GameBoard';
+import MoveHistory, { MoveHistoryItem } from '../components/MoveHistory';
 
 import {
 	Owner,
@@ -104,6 +105,7 @@ const playerColour: Owner = 'white';
 
 export default function Game() {
 	const [board, setBoard] = useState<GamePiece[][]>(initialBoard);
+	const [moveHistory, setMoveHistory] = useState<MoveHistoryItem[]>([]);
 
 	const updateCell = (board: GamePiece[][], pos: Position, newPiece: GamePiece): GamePiece[][] => {
 		return board.toSpliced(
@@ -232,9 +234,15 @@ export default function Game() {
 
 	const handleAttemptMove = (from: Position, to: Position) => {
 		const fromCell = board[from.row][from.col];
+		const toCell = board[to.row][to.col];
 
 		if (!isValidMove(from, to))
 			return;
+
+		setMoveHistory(curr => [...curr, {
+			from: {...from, ...fromCell},
+			to: {...to, ...toCell }
+		}]);
 
 		setBoard(curr => 
 			updateCell(
@@ -245,11 +253,15 @@ export default function Game() {
 		);
 	}
 
-	return (
+	return (<>
 		<GameBoard
 			board={board}
 			playerColour={playerColour}
 			onAttemptMove={handleAttemptMove}
 		/>
-	);
+
+		<MoveHistory
+			items={moveHistory}
+		/>
+	</>);
 }
